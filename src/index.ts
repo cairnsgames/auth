@@ -1,6 +1,5 @@
 
-import MyCounter from './components/app'
-import { TenantContext, TenantProvider } from './provider/provider';
-import { useTenant} from './provider/usetenant';
+import { AuthenticationContext, AuthenticationProvider } from './provider/authprovider';
+import { useAuth } from './provider/useauth'
 
-export { MyCounter, TenantContext, TenantProvider, useTenant }
+export { AuthenticationContext, AuthenticationProvider, useAuth }
