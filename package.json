@@ -29,7 +29,9 @@
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "react": ">=16",    
+    "@cairnsgames/tenant": "^1.1.7",
+    "@cairnsgames/ui-components": "^1.0.3"
   },
   "files": [
     "dist",
@@ -37,8 +39,6 @@
     "README.md"
   ],
   "dependencies": {
-    "@cairnsgames/tenant": "^1.1.7",
-    "@cairnsgames/ui-components": "^1.0.3",
     "@react-oauth/google": "^0.11.1",
     "react-jwt": "^1.2.0"
   }
