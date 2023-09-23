@@ -1,6 +1,6 @@
 {
-  "name": "@cairnsgames/templatelib",
-  "version": "1.0.4",
+  "name": "@cairnsgames/auth",
+  "version": "1.0.0",
   "description": "Template for future libraries",
   "keywords": [
     "react",
@@ -10,7 +10,7 @@
   "author": "",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cairnsgames/lib-template.git"
+    "url": "git+https://github.com/cairnsgames/auth.git"
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
