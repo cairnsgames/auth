@@ -1,0 +1,41 @@
+name: Node.js Package
+
+on: 
+  push:
+    branches:    
+      - main 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm ci
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - run: git config --global user.name ${{ secrets.CG_USERNAME }}
+      - run: git config --global user.email ${{ secrets.CG_USEREMAIL }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          registry-url: https://npm.pkg.github.com/
+          scope: "@cairnswm"
+      - name: Bump version
+        run: npm version patch --git-tag-version  -m "[RELEASE] %s"
+      - run: git push origin main --follow-tags --force
+      - run: npm ci
+      - run: npm run build
+      - run: npm publish --@cairnsgames:registry=https://npm.pkg.github.com/
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
