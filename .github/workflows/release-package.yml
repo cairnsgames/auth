@@ -13,6 +13,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          registry-url: https://npm.pkg.github.com/
+          scope: "@cairnswm"
       - run: npm ci
 
   publish:
