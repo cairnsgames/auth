@@ -17,8 +17,6 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: "@cairnswm"
       - run: npm ci
-        with:        
-          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
 
 
   publish:
