@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useCallback } from "react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useJwt } from "react-jwt";
 import { useLogger } from "@cairnsgames/ui-components";
-import { useTenant, useConfig } from "@cairnsgames/tenant";
+import { useTenant } from "@cairnsgames/tenant";
 
 
 type AuthType = {
@@ -53,7 +53,6 @@ const AuthenticationProvider = (props: AuthProviderType) => {
   const [user, setUser] = useState<any>();
   const { decodedToken } = useJwt(googleAccessToken || ""); // What about isExpired
   const { logger } = useLogger("Auth");
-  const { process } = useConfig();
 
   const { tenant } = useTenant();
   
@@ -85,10 +84,10 @@ const AuthenticationProvider = (props: AuthProviderType) => {
       const body = { token: savedToken };
       logger.log(
         "ValidateToken env",
-        process.env["REACT_APP_CAIRNSGAMES_AUTH_API"]
+        process.env.REACT_APP_AUTH_API
       );
       fetch(
-        process.env["REACT_APP_CAIRNSGAMES_AUTH_API"] +
+        process.env.REACT_APP_AUTH_API +
           "validateToken.php?debug=true",
         {
           body: JSON.stringify(body),
@@ -144,7 +143,7 @@ const AuthenticationProvider = (props: AuthProviderType) => {
         avatar: decodedToken2.picture,
       };
       await fetch(
-        process.env["REACT_APP_CAIRNSGAMES_AUTH_API"] + "/logingoogle.php",
+        process.env.REACT_APP_AUTH_API + "/logingoogle.php",
         {
           body: JSON.stringify(body),
           headers: { "Content-Type": "application/json", APP_ID: tenant },
@@ -184,7 +183,7 @@ const AuthenticationProvider = (props: AuthProviderType) => {
     logger.log("process.env", process.env);
     logger.log("APP_ID", tenant);
     return fetch(
-      process.env["REACT_APP_CAIRNSGAMES_AUTH_API"] + "/login.php?debug=true",
+      process.env.REACT_APP_AUTH_API + "/login.php?debug=true",
       {
         body: JSON.stringify(body),
         headers: { "Content-Type": "application/json", APP_ID: tenant },
@@ -217,9 +216,9 @@ const AuthenticationProvider = (props: AuthProviderType) => {
     const body = {
       email: email,
     };
-    logger.log("process.env.REACT_APP_CAIRNSGAMES_AUTH_API", process);
+    logger.log("process.env.REACT_APP_AUTH_API", process);
     return fetch(
-      process.env["REACT_APP_CAIRNSGAMES_AUTH_API"] +
+      process.env.REACT_APP_AUTH_API + 
         "/forgotpassword.php?debug=true",
       {
         body: JSON.stringify(body),
@@ -248,7 +247,7 @@ const AuthenticationProvider = (props: AuthProviderType) => {
     };
     logger.log("process.env.REACT_APP_CAIRNSGAMES_AUTH_API", process);
     return fetch(
-      process.env["REACT_APP_CAIRNSGAMES_AUTH_API"] +
+      process.env.REACT_APP_AUTH_API +
         "/changepassword.php?debug=true",
       {
         body: JSON.stringify(body),
