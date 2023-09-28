@@ -30,7 +30,7 @@
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
-    "@cairnsgames/tenant": "^1.1.9",
+    "@cairnsgames/tenant": "^1.1.10",
     "@cairnsgames/ui-components": "^1.0.3",
     "react": ">=16"
   },

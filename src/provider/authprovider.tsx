@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useCallback } from "react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useJwt } from "react-jwt";
 import { useLogger } from "@cairnsgames/ui-components";
-import { useTenant } from "@cairnsgames/tenant";
+import { useTenant, useConfig } from "@cairnsgames/tenant";
 
 type AuthType = {
   token?: string;
@@ -54,6 +54,7 @@ const AuthenticationProvider = (props: AuthProviderType) => {
   const { logger } = useLogger("Auth");
 
   const { tenant } = useTenant();
+  const { process } = useConfig();
 
   logger.log("APPLICATION ID For Auth", tenant);
 
