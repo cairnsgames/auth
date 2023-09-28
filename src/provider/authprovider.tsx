@@ -4,37 +4,36 @@ import { useJwt } from "react-jwt";
 import { useLogger } from "@cairnsgames/ui-components";
 import { useTenant } from "@cairnsgames/tenant";
 
-
 type AuthType = {
-  token?: string
-  login: Function
-  logout: Function 
-  forgot: Function
-  user : any
-  setgoogleAccessToken: Function
-  changePassword: Function
-}
+  token?: string;
+  login: Function;
+  logout: Function;
+  forgot: Function;
+  user: any;
+  setgoogleAccessToken: Function;
+  changePassword: Function;
+};
 type AuthProviderType = {
-  googleClientId: string,
-  children: React.ReactNode
-}
+  googleClientId: string;
+  children: React.ReactNode;
+};
 const defaultAuth: AuthType = {
   token: "",
   login: () => {},
-  logout: () => {}, 
+  logout: () => {},
   forgot: () => {},
-  user : {},
+  user: {},
   setgoogleAccessToken: () => {},
   changePassword: () => {},
-}
+};
 interface googleDecodedToken {
-  email: string,
-  family_name: string,
-  given_name: string,
-  sub: string,
-  name  : string,
-  picture: string,
-  verified_email: string,
+  email: string;
+  family_name: string;
+  given_name: string;
+  sub: string;
+  name: string;
+  picture: string;
+  verified_email: string;
 }
 
 // create context
@@ -55,7 +54,7 @@ const AuthenticationProvider = (props: AuthProviderType) => {
   const { logger } = useLogger("Auth");
 
   const { tenant } = useTenant();
-  
+
   logger.log("APPLICATION ID For Auth", tenant);
 
   useEffect(() => {
@@ -82,19 +81,12 @@ const AuthenticationProvider = (props: AuthProviderType) => {
     if (savedToken && savedToken !== "undefined") {
       // Validate Token
       const body = { token: savedToken };
-      logger.log(
-        "ValidateToken env",
-        process.env.REACT_APP_AUTH_API
-      );
-      fetch(
-        process.env.REACT_APP_AUTH_API +
-          "validateToken.php?debug=true",
-        {
-          body: JSON.stringify(body),
-          headers: { "Content-Type": "application/json", APP_ID: tenant },
-          method: "POST",
-        }
-      )
+      logger.log("ValidateToken env", process.env.REACT_APP_AUTH_API);
+      fetch(process.env.REACT_APP_AUTH_API + "validateToken.php?debug=true", {
+        body: JSON.stringify(body),
+        headers: { "Content-Type": "application/json", APP_ID: tenant },
+        method: "POST",
+      })
         .then((res) => res.json())
         .then((data) => {
           if (typeof data === "string") {
@@ -142,14 +134,11 @@ const AuthenticationProvider = (props: AuthProviderType) => {
         googleid: decodedToken2.sub,
         avatar: decodedToken2.picture,
       };
-      await fetch(
-        process.env.REACT_APP_AUTH_API + "/logingoogle.php",
-        {
-          body: JSON.stringify(body),
-          headers: { "Content-Type": "application/json", APP_ID: tenant },
-          method: "POST",
-        }
-      )
+      await fetch(process.env.REACT_APP_AUTH_API + "/logingoogle.php", {
+        body: JSON.stringify(body),
+        headers: { "Content-Type": "application/json", APP_ID: tenant },
+        method: "POST",
+      })
         .then((res) => res.json())
         .then((data) => {
           logger.log("GOOGLE LOGIN", data);
@@ -182,14 +171,11 @@ const AuthenticationProvider = (props: AuthProviderType) => {
     };
     logger.log("process.env", process.env);
     logger.log("APP_ID", tenant);
-    return fetch(
-      process.env.REACT_APP_AUTH_API + "/login.php?debug=true",
-      {
-        body: JSON.stringify(body),
-        headers: { "Content-Type": "application/json", APP_ID: tenant },
-        method: "POST",
-      }
-    )
+    return fetch(process.env.REACT_APP_AUTH_API + "/login.php?debug=true", {
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json", APP_ID: tenant },
+      method: "POST",
+    })
       .then((res) => res.json())
       .then((data) => {
         logger.log("LOGIN DATA", data);
@@ -218,11 +204,10 @@ const AuthenticationProvider = (props: AuthProviderType) => {
     };
     logger.log("process.env.REACT_APP_AUTH_API", process);
     return fetch(
-      process.env.REACT_APP_AUTH_API + 
-        "/forgotpassword.php?debug=true",
+      process.env.REACT_APP_AUTH_API + "/forgotpassword.php?debug=true",
       {
         body: JSON.stringify(body),
-        headers: { "Content-Type": "application/json", "APP_ID": tenant },
+        headers: { "Content-Type": "application/json", APP_ID: tenant },
         method: "POST",
       }
     )
@@ -237,7 +222,12 @@ const AuthenticationProvider = (props: AuthProviderType) => {
       });
   };
 
-  const changePassword = (id:string, old:string, password:string, password2:string) => {
+  const changePassword = (
+    id: string,
+    old: string,
+    password: string,
+    password2: string
+  ) => {
     logger.log("change password", id, old, password, password2);
     const body = {
       userid: id,
@@ -247,15 +237,14 @@ const AuthenticationProvider = (props: AuthProviderType) => {
     };
     logger.log("process.env.REACT_APP_CAIRNSGAMES_AUTH_API", process);
     return fetch(
-      process.env.REACT_APP_AUTH_API +
-        "/changepassword.php?debug=true",
+      process.env.REACT_APP_AUTH_API + "/changepassword.php?debug=true",
       {
         body: JSON.stringify(body),
         headers: { "Content-Type": "application/json", APP_ID: tenant },
         method: "POST",
       }
     );
-  }
+  };
 
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
