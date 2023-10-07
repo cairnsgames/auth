@@ -48,7 +48,6 @@ const AuthenticationContext = createContext<AuthType>(defaultAuth);
  * @returns The component `AuthenticationProvider` is being returned.
  */
 const AuthenticationProvider = (props: AuthProviderType) => {
-  console.log("Authentication Process.env", process.env)
   const { children, googleClientId } = props;
   const [token, settoken] = useState<string>();
   const [googleAccessToken, setgoogleAccessToken] = useState<string>();
@@ -58,7 +57,10 @@ const AuthenticationProvider = (props: AuthProviderType) => {
 
   const { tenant } = useTenant();
 
+  
+  logger.log("process.env", process.env)
   logger.log("APPLICATION ID For Auth", tenant);
+  logger.log("google ClinetId", googleClientId);
 
   useEffect(() => {
     logger.log("Auth Tenant", tenant);
