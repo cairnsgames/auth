@@ -2,7 +2,9 @@ import React, { createContext, useState, useEffect, useCallback } from "react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useJwt } from "react-jwt";
 import { useLogger } from "@cairnsgames/ui-components";
-import { useTenant, useConfig } from "@cairnsgames/tenant";
+import { useTenant } from "@cairnsgames/tenant";
+
+import 'dotenv/config';
 
 type AuthType = {
   token?: string;
@@ -46,6 +48,7 @@ const AuthenticationContext = createContext<AuthType>(defaultAuth);
  * @returns The component `AuthenticationProvider` is being returned.
  */
 const AuthenticationProvider = (props: AuthProviderType) => {
+  console.log("Authentication Process.env", process.env)
   const { children, googleClientId } = props;
   const [token, settoken] = useState<string>();
   const [googleAccessToken, setgoogleAccessToken] = useState<string>();
@@ -54,7 +57,6 @@ const AuthenticationProvider = (props: AuthProviderType) => {
   const { logger } = useLogger("Auth");
 
   const { tenant } = useTenant();
-  const { process } = useConfig();
 
   logger.log("APPLICATION ID For Auth", tenant);
 
