@@ -238,7 +238,7 @@ const AuthenticationProvider = (props: AuthProviderType) => {
       password: password,
       password2: password2,
     };
-    logger.log("process.env.REACT_APP_CAIRNSGAMES_AUTH_API", process);
+    logger.log("process.env.REACT_APP_AUTH_API", process);
     return fetch(
       process.env.REACT_APP_AUTH_API + "/changepassword.php?debug=true",
       {

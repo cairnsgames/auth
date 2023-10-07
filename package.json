@@ -31,8 +31,10 @@
   },
   "peerDependencies": {
     "@cairnsgames/tenant": "^1.1.10",
-    "@cairnsgames/ui-components": "^1.0.3",
-    "react": ">=16"
+    "@cairnsgames/ui-components": "^1.0.4",
+    "bootstrap": "^5.2.0",
+    "react": ">=16",
+    "react-bootstrap": "^2.9.0"
   },
   "files": [
     "dist",
